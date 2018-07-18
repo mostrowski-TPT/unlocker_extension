@@ -195,7 +195,9 @@ define([
                 _isReady: true
             });
         },
-
+///////////////////////////////////////////////////////////////////PLUGIN
+        
+        
         unlockelement: function () {
             
             var unlockingitems = this.get("_unlockingItems");
@@ -205,7 +207,22 @@ define([
                 itemmodel.set("_isHidden", false);
             });
         },
+        
+        
+        lockelement: function(){
+            var unlockingitems = this.get("_unlockingItems");
+            _.each(unlockingitems, function (item) {
+                var itemid = item._unlockId;
+                var itemmodel = Adapt.findById(itemid);
+                itemmodel.set("_isHidden", true);
+            });
+         },
 
+ ///////////////////////////////////////////////////////////////////PLUGIN       
+        
+        
+        
+        
         setCompletionStatus: function () {
             if (this.get('_isVisible')) {
                 this.set('_isComplete', true);

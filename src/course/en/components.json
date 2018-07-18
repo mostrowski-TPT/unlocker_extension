@@ -9,7 +9,10 @@
 		"title": "test",   
 		"displayTitle": "Custom component",
 		"body": "",
-		"instruction": "Press button to complete the step",
+		"instruction": "Press button to complete the step and unlock thirdtext component on another page",
+        "_unlockingItems": [
+            {"_unlockId": "thirdtext"}
+        ],
 		"_pageLevelProgress": {
 			"_isEnabled": true
 		}
@@ -74,6 +77,22 @@
 		"title": "grats",
 		"displayTitle": "",
 		"body": "You have completed the step",
+		"instruction": "",
+        "_isHidden": true,
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+    {
+		"_id": "thirdtext",
+		"_parentId": "unlockerblock2",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "left",
+		"title": "grats",
+		"displayTitle": "thirdtext",
+		"body": "Unlocked by button on p1",
 		"instruction": "",
         "_isHidden": true,
 		"_pageLevelProgress": {

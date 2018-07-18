@@ -64,10 +64,13 @@ define(["coreViews/componentView", "coreJS/adapt"], function (ComponentView, Ada
 //                itemmodel.set("_isHidden", false);
 //            });
 //        },
+            
 //
- //           and call
+ //           and call on any event in any view:
+                    
+            
             //this.model.unlockelement();
-            //on any event in any view
+            
         
         
         
