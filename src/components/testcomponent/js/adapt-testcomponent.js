@@ -29,7 +29,10 @@ define(["coreViews/componentView", "coreJS/adapt"], function (ComponentView, Ada
         clickbuton: function (event) {
             event.preventDefault();
             this.setCompletionStatus();
-            this.model.unlockelement();
+            
+            
+            //called as a function from Adapt.Model
+            //this.model.unlockelement();
 /////////////////////////////////////////////////////////////////////////////////////////////////
             //simplest snippet
      
@@ -70,6 +73,9 @@ define(["coreViews/componentView", "coreJS/adapt"], function (ComponentView, Ada
                     
             
             //this.model.unlockelement();
+            
+            
+            //you can also put this to setCompletionStatus() in adapt View to make the function calle on completition of every element
             
         
         

@@ -204,19 +204,19 @@ define([
             _.each(unlockingitems, function (item) {
                 var itemid = item._unlockId;
                 var itemmodel = Adapt.findById(itemid);
-                itemmodel.set("_isHidden", false);
+               itemmodel.set("_isHidden", false);
             });
         },
-        
-        
-        lockelement: function(){
-            var unlockingitems = this.get("_unlockingItems");
-            _.each(unlockingitems, function (item) {
-                var itemid = item._unlockId;
-                var itemmodel = Adapt.findById(itemid);
-                itemmodel.set("_isHidden", true);
-            });
-         },
+//        
+//        
+//        lockelement: function(){
+//            var unlockingitems = this.get("_unlockingItems");
+//            _.each(unlockingitems, function (item) {
+//                var itemid = item._unlockId;
+//                var itemmodel = Adapt.findById(itemid);
+//                itemmodel.set("_isHidden", true);
+//            });
+//         },
 
  ///////////////////////////////////////////////////////////////////PLUGIN       
         
@@ -227,6 +227,9 @@ define([
             if (this.get('_isVisible')) {
                 this.set('_isComplete', true);
                 this.set('_isInteractionComplete', true);
+                
+                //added to setcompletition
+                //this.unlockelement();
             }
         },
 
