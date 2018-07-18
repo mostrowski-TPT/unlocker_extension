@@ -108,6 +108,9 @@ define([
             this.model.set('_isReady', true);
         },
 
+
+        
+        
         setCompletionStatus: function() {
             if (this.model.get('_isVisible')) {
                 this.model.set({

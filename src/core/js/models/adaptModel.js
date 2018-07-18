@@ -34,7 +34,7 @@ define([
 
         },
 
-        setupModel: function() {
+        setupModel: function () {
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
             }
@@ -50,7 +50,7 @@ define([
 
             this.init();
 
-            _.defer(_.bind(function() {
+            _.defer(_.bind(function () {
                 if (this._children) {
                     this.checkCompletionStatus();
 
@@ -65,19 +65,19 @@ define([
 
         },
 
-        setupTrackables: function() {
+        setupTrackables: function () {
 
             // Limit state trigger calls and make state change callbacks batched-asynchronous
             var originalTrackableStateFunction = this.triggerTrackableState;
             this.triggerTrackableState = _.compose(
-                _.bind(function() {
+                _.bind(function () {
 
                     // Flag that the function is awaiting trigger
                     this.triggerTrackableState.isQueued = true;
 
                 }, this),
-                _.debounce(_.bind(function() {
-                    
+                _.debounce(_.bind(function () {
+
                     // Trigger original function
                     originalTrackableStateFunction.apply(this);
 
@@ -88,7 +88,7 @@ define([
             );
 
             // Listen to model changes, trigger trackable state change when appropriate
-            this.listenTo(this, "change", function(model, value) {
+            this.listenTo(this, "change", function (model, value) {
 
                 // Skip if trigger queued or adapt hasn't started yet
                 if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
@@ -98,8 +98,8 @@ define([
                 // Check that property is trackable
                 var trackablePropertyNames = _.result(this, 'trackable', []);
                 var changedPropertyNames = _.keys(model.changed);
-                var isTrackable = _.find(changedPropertyNames, function(item, index) {
-                     return _.contains(trackablePropertyNames, item);
+                var isTrackable = _.find(changedPropertyNames, function (item, index) {
+                    return _.contains(trackablePropertyNames, item);
                 }.bind(this));
 
                 if (isTrackable) {
@@ -109,7 +109,7 @@ define([
             });
         },
 
-        setupChildListeners: function() {
+        setupChildListeners: function () {
             var children = this.getChildren();
             if (!children.length) {
                 return;
@@ -122,9 +122,9 @@ define([
             });
         },
 
-        init: function() {},
+        init: function () {},
 
-        getTrackableState: function() {
+        getTrackableState: function () {
 
             var trackable = this.resultExtend("trackable", []);
             var json = this.toJSON();
@@ -136,7 +136,7 @@ define([
 
         },
 
-        setTrackableState: function(state) {
+        setTrackableState: function (state) {
 
             var trackable = this.resultExtend("trackable", []);
 
@@ -151,31 +151,32 @@ define([
 
         },
 
-        triggerTrackableState: function() {
-            
+        triggerTrackableState: function () {
+
             Adapt.trigger("state:change", this, this.getTrackableState());
-            
+
         },
 
-        reset: function(type, force) {
+        reset: function (type, force) {
             if (!this.get("_canReset") && !force) return;
 
             type = type || true;
 
             switch (type) {
-            case "hard": case true:
-                this.set({
-                    _isEnabled: true,
-                    _isComplete: false,
-                    _isInteractionComplete: false
-                });
-                break;
-            case "soft":
-                this.set({
-                    _isEnabled: true,
-                    _isInteractionComplete: false
-                });
-                break;
+                case "hard":
+                case true:
+                    this.set({
+                        _isEnabled: true,
+                        _isComplete: false,
+                        _isInteractionComplete: false
+                    });
+                    break;
+                case "soft":
+                    this.set({
+                        _isEnabled: true,
+                        _isInteractionComplete: false
+                    });
+                    break;
             }
         },
 
@@ -184,14 +185,28 @@ define([
             // Check if any return _isReady:false
             // If not - set this model to _isReady: true
             var children = this.getAvailableChildModels();
-            if (_.find(children, function(child) { return child.get('_isReady') === false; })) {
+            if (_.find(children, function (child) {
+                    return child.get('_isReady') === false;
+                })) {
                 return;
             }
 
-            this.set({_isReady: true});
+            this.set({
+                _isReady: true
+            });
         },
 
-        setCompletionStatus: function() {
+        unlockelement: function () {
+            
+            var unlockingitems = this.get("_unlockingItems");
+            _.each(unlockingitems, function (item) {
+                var itemid = item._unlockId;
+                var itemmodel = Adapt.findById(itemid);
+                itemmodel.set("_isHidden", false);
+            });
+        },
+
+        setCompletionStatus: function () {
             if (this.get('_isVisible')) {
                 this.set('_isComplete', true);
                 this.set('_isInteractionComplete', true);
@@ -216,8 +231,8 @@ define([
          * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true; 
          * if not, we set it to false.
          * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
-         */        
-        checkCompletionStatusFor: function(completionAttribute) {
+         */
+        checkCompletionStatusFor: function (completionAttribute) {
             if (!completionAttribute) completionAttribute = "_isComplete";
 
             var completed = false;
@@ -225,11 +240,11 @@ define([
             var requireCompletionOf = this.get("_requireCompletionOf");
 
             if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
-                completed = (_.find(children, function(child) {
+                completed = (_.find(children, function (child) {
                     return !child.get(completionAttribute) && !child.get('_isOptional');
                 }) === undefined);
             } else {
-                completed = (_.filter(children, function(child) {
+                completed = (_.filter(children, function (child) {
                     return child.get(completionAttribute) && !child.get('_isOptional');
                 }).length >= requireCompletionOf);
             }
@@ -258,7 +273,7 @@ define([
 
         },
 
-        findDescendantModels: function(descendants) {
+        findDescendantModels: function (descendants) {
             var children = this.getChildren().models;
 
             // first check if descendant is child and return child
@@ -292,7 +307,7 @@ define([
             return returnedDescendants;
         },
 
-        
+
         // Fetchs the sub structure of a model as a flattened array
         // 
         // Such that the tree:
@@ -305,7 +320,7 @@ define([
         //  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
         // 
         // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.        
-        getAllDescendantModels: function(isParentFirst) {
+        getAllDescendantModels: function (isParentFirst) {
 
             var descendants = [];
 
@@ -332,7 +347,7 @@ define([
                 }
 
                 descendants = descendants.concat(subDescendants);
-                
+
                 if (isParentFirst !== true) {
                     descendants.push(child);
                 }
@@ -390,9 +405,9 @@ define([
         //  findRelative(modelC1, "@component +4") = modelC5;
         //
         // See Adapt.parseRelativeString() for a description of relativeStrings
-        findRelativeModel: function(relativeString, options) {
-            
-            var types = [ "menu", "page", "article", "block", "component" ];
+        findRelativeModel: function (relativeString, options) {
+
+            var types = ["menu", "page", "article", "block", "component"];
 
             options = options || {};
 
@@ -427,7 +442,7 @@ define([
 
                 if (findDescendantType) {
                     // move by one less as ordering allows
-                    moveBy-=1;
+                    moveBy -= 1;
                 }
 
             } else if (findDescendantType) {
@@ -444,7 +459,7 @@ define([
             }
 
             // find current index in array
-            var modelIndex = _.findIndex(pageDescendants, function(pageDescendant) {
+            var modelIndex = _.findIndex(pageDescendants, function (pageDescendant) {
                 if (pageDescendant.get("_id") === modelId) {
                     return true;
                 }
@@ -455,13 +470,13 @@ define([
 
                 // normalize offset position to allow for overflow looping
                 var typeCounts = {};
-                pageDescendants.forEach(function(model) {
+                pageDescendants.forEach(function (model) {
                     var type = model.get("_type");
                     typeCounts[type] = typeCounts[type] || 0;
                     typeCounts[type]++;
                 });
                 moveBy = moveBy % typeCounts[relativeDescriptor.type];
-                
+
                 // double up entries to allow for overflow looping
                 pageDescendants = pageDescendants.concat(pageDescendants.slice(0));
 
@@ -488,12 +503,14 @@ define([
             if (!this._children) {
                 childrenCollection = new Backbone.Collection();
             } else {
-                var children = Adapt[this._children].where({_parentId: this.get("_id")});
+                var children = Adapt[this._children].where({
+                    _parentId: this.get("_id")
+                });
                 childrenCollection = new Backbone.Collection(children);
             }
 
-            if (this.get('_type') == 'block' && childrenCollection.length == 2
-                && childrenCollection.models[0].get('_layout') !== 'left' && this.get('_sortComponents') !== false) {
+            if (this.get('_type') == 'block' && childrenCollection.length == 2 &&
+                childrenCollection.models[0].get('_layout') !== 'left' && this.get('_sortComponents') !== false) {
                 // Components may have a 'left' or 'right' _layout,
                 // so ensure they appear in the correct order
                 // Re-order component models to correct it
@@ -507,13 +524,13 @@ define([
             return childrenCollection;
         },
 
-        getAvailableChildModels: function() {
+        getAvailableChildModels: function () {
             return this.getChildren().where({
                 _isAvailable: true
             });
         },
 
-        getAvailableChildren: function() {
+        getAvailableChildren: function () {
             Adapt.log.warn("DEPRECATED - Use getAvailableChildModels() as getAvailableChildren() may be removed in the future");
 
             return new Backbone.Collection(this.getChildren().where({
@@ -533,7 +550,7 @@ define([
             return parent;
         },
 
-        getAncestorModels: function(shouldIncludeChild) {
+        getAncestorModels: function (shouldIncludeChild) {
             var parents = [];
             var context = this;
 
@@ -547,7 +564,7 @@ define([
             return parents.length ? parents : null;
         },
 
-        getParents: function(shouldIncludeChild) {
+        getParents: function (shouldIncludeChild) {
             Adapt.log.warn("DEPRECATED - Use getAncestorModels() as getParents() may be removed in the future");
 
             var parents = [];
@@ -612,11 +629,13 @@ define([
 
         },
 
-        setOptional: function(value) {
-            this.set({_isOptional: value});
+        setOptional: function (value) {
+            this.set({
+                _isOptional: value
+            });
         },
 
-        checkLocking: function() {
+        checkLocking: function () {
             var lockType = this.get("_lockType");
 
             if (!lockType) return;
@@ -640,7 +659,7 @@ define([
             }
         },
 
-        setSequentialLocking: function() {
+        setSequentialLocking: function () {
             var children = this.getAvailableChildModels();
 
             for (var i = 1, j = children.length; i < j; i++) {
@@ -648,7 +667,7 @@ define([
             }
         },
 
-        setUnlockFirstLocking: function() {
+        setUnlockFirstLocking: function () {
             var children = this.getAvailableChildModels();
             var isFirstChildComplete = children[0].get("_isComplete");
 
@@ -657,7 +676,7 @@ define([
             }
         },
 
-        setLockLastLocking: function() {
+        setLockLastLocking: function () {
             var children = this.getAvailableChildModels();
             var lastIndex = children.length - 1;
 
@@ -670,7 +689,7 @@ define([
             children[lastIndex].set("_isLocked", false);
         },
 
-        setCustomLocking: function() {
+        setCustomLocking: function () {
             var children = this.getAvailableChildModels();
 
             for (var i = 0, j = children.length; i < j; i++) {
@@ -680,7 +699,7 @@ define([
             }
         },
 
-        shouldLock: function(child) {
+        shouldLock: function (child) {
             var lockedBy = child.get("_lockedBy");
 
             if (!lockedBy) return false;
@@ -693,8 +712,7 @@ define([
 
                     if (!model.get("_isAvailable")) continue;
                     if (!model.get("_isComplete")) return true;
-                }
-                catch (e) {
+                } catch (e) {
                     console.warn("AdaptModel.shouldLock: unknown _lockedBy ID \"" + id +
                         "\" found on " + child.get("_id"));
                 }
@@ -703,7 +721,7 @@ define([
             return false;
         },
 
-        onIsComplete: function() {
+        onIsComplete: function () {
             this.checkCompletionStatus();
 
             this.checkLocking();

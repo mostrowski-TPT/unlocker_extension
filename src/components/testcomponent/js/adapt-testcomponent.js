@@ -29,8 +29,9 @@ define(["coreViews/componentView", "coreJS/adapt"], function (ComponentView, Ada
         clickbuton: function (event) {
             event.preventDefault();
             this.setCompletionStatus();
+            this.model.unlockelement();
 /////////////////////////////////////////////////////////////////////////////////////////////////
-            
+            //simplest snippet
      
             
 
@@ -41,14 +42,39 @@ define(["coreViews/componentView", "coreJS/adapt"], function (ComponentView, Ada
             
             
 /////////////////////////////////////////////////////////////////////////////////////////////////
+            //use it inside specified view
+            
             //set _isHidden in any model parameter and then provide its id in unlocking component
-            var unlockingitems = this.model.get("_unlockingItems");
-            _.each(unlockingitems, function (item) {
-                var temp = item._unlockId;
-                var someomodel = Adapt.findById(temp);
-                someomodel.set("_isHidden", false);
-            });
+            
+//            var unlockingitems = this.model.get("_unlockingItems");
+//            _.each(unlockingitems, function (item) {
+//                var itemid = item._unlockId;
+//                var itemmodel = Adapt.findById(itemid);
+//                itemmodel.set("_isHidden", false);
+//            });
 /////////////////////////////////////////////////////////////////////////////////////////////////
+        //OR PASTE IT TO Adapt.model
+            
+//             unlockelement: function () {
+//            
+//            var unlockingitems = this.get("_unlockingItems");
+//            _.each(unlockingitems, function (item) {
+//                var itemid = item._unlockId;
+//                var itemmodel = Adapt.findById(itemid);
+//                itemmodel.set("_isHidden", false);
+//            });
+//        },
+//
+ //           and call
+            //this.model.unlockelement();
+            //on any event in any view
+        
+        
+        
+        
+        
+        
+        
         },
     });
 
