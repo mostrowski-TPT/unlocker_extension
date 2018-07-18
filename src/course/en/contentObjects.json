@@ -1,0 +1,42 @@
+[
+	{
+		"_id": "co-05",
+		"_parentId": "course",
+		"_type": "page",
+		"_classes": "",
+		"title": "Custom component",
+		"displayTitle": "Custom Component",
+		"body": "The most schematic example of interactive custom component with completition condition",
+		"pageBody": "",
+		"instruction": "",
+		"_graphic": {
+			"src": "course/en/images/menu_thumb.jpg",
+			"alt": "Placeholder graphic."
+		},
+		"linkText": "View",
+		"duration": "2 mins",
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+    {
+    "_id": "unlockerpage",
+		"_parentId": "course",
+		"_type": "page",
+		"_classes": "",
+		"title": "unlocker",
+		"displayTitle": "unlocker",
+		"body": "unlocker",
+		"pageBody": "",
+		"instruction": "",
+		"_graphic": {
+			"src": "course/en/images/menu_thumb.jpg",
+			"alt": "Placeholder graphic."
+		},
+		"linkText": "View",
+		"duration": "2 mins",
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	}
+]
