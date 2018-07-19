@@ -25,65 +25,60 @@ define(["coreViews/componentView", "coreJS/adapt"], function (ComponentView, Ada
                 'click .specialbtn': 'clickbuton'
             }
         },
+        
         //called events below
         clickbuton: function (event) {
             event.preventDefault();
             this.setCompletionStatus();
-            
-            
+
+            /////////////////////////////////////////////////////////////////           
             //called as a function from Adapt.Model
             //this.model.unlockelement();
-/////////////////////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////////////////////
             //simplest snippet
-     
-            
+
+
 
             //var someomodel = Adapt.findById("sometexttwo");
             //someomodel.set("_isHidden", false);  
-            
-            
-            
-            
-/////////////////////////////////////////////////////////////////////////////////////////////////
-            //use it inside specified view
-            
+
+
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            //paste it inside specified element view
+
             //set _isHidden in any model parameter and then provide its id in unlocking component
-            
-//            var unlockingitems = this.model.get("_unlockingItems");
-//            _.each(unlockingitems, function (item) {
-//                var itemid = item._unlockId;
-//                var itemmodel = Adapt.findById(itemid);
-//                itemmodel.set("_isHidden", false);
-//            });
-/////////////////////////////////////////////////////////////////////////////////////////////////
-        //OR PASTE IT TO Adapt.model
-            
-//             unlockelement: function () {
-//            
-//            var unlockingitems = this.get("_unlockingItems");
-//            _.each(unlockingitems, function (item) {
-//                var itemid = item._unlockId;
-//                var itemmodel = Adapt.findById(itemid);
-//                itemmodel.set("_isHidden", false);
-//            });
-//        },
-            
-//
- //           and call on any event in any view:
-                    
-            
+
+            //            var unlockingitems = this.model.get("_unlockingItems");
+            //            _.each(unlockingitems, function (item) {
+            //                var itemid = item._unlockId;
+            //                var itemmodel = Adapt.findById(itemid);
+            //                itemmodel.set("_isHidden", false);
+            //            });
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            //OR PASTE IT TO Adapt.model
+
+            //             unlockelement: function () {
+            //            
+            //            var unlockingitems = this.get("_unlockingItems");
+            //            _.each(unlockingitems, function (item) {
+            //                var itemid = item._unlockId;
+            //                var itemmodel = Adapt.findById(itemid);
+            //                itemmodel.set("_isHidden", false);
+            //            });
+            //        },
+
+            //
+            //           and call on any event in any view:
+
+
             //this.model.unlockelement();
-            
-            
-            //you can also put this to setCompletionStatus() in adapt View to make the function calle on completition of every element
-            
-        
-        
-        
-        
-        
-        
-        
+
+
+            //you can also put this to setCompletionStatus() in Adapt.View to make the function call on completition of any element
+            //in such case placing attributes in JSON file is enough to make it work for any element on completition
+
         },
     });
 

@@ -113,7 +113,7 @@
     "title": "Adapt Version 3.0 demonstration",
     "displayTitle": "Adapt Version 3.0 demonstration",
     "description": "A sample course demonstrating the capabilities of the Adapt Framework v3.0",
-    "body": "Files: src/components/testcomponent",
+    "body": "Files: core/js/adaptModel.js<br> core/js/adaptView.js <br>extensions/adapt-contrib-unlocker/adapt-contrib-unlocker.js <br>components/testcomponent/js/testcomponent.js",
     "_buttons": {
         "_submit": {
             "buttonText": "Submit",
