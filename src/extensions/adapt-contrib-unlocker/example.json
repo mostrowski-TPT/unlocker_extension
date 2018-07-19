@@ -1,0 +1,51 @@
+ [{
+		"_id": "unlocker",
+		"_parentId": "unlockerblock",
+		"_type": "component",
+		"_component": "testcomponent",
+		"_classes": "",
+		"_layout": "left",
+		"title": "test",   
+		"displayTitle": "Unlocker component",
+		"body": "",
+		"instruction": "Press button to unlock other components",
+        "_unlockingItems": [
+            {"_unlockId": "sometexttwo"},
+            {"_unlockId": "sometextmore"}
+        ],
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+    {
+		"_id": "sometexttwo",
+		"_parentId": "unlockerblock",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "right",
+		"title": "grats2",
+		"displayTitle": "",
+		"body": "UNLOCK ON SMA BLOCK",
+		"instruction": "",
+        "_isHidden": true,
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+    {
+		"_id": "sometextmore",
+		"_parentId": "unlockerblock2",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "left",
+		"title": "grats3",
+		"displayTitle": "",
+		"body": "You have completed the step",
+		"instruction": "",
+        "_isHidden": true,
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	}]

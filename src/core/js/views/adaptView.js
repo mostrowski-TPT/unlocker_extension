@@ -114,7 +114,7 @@ define([
         setCompletionStatus: function() {
             if (this.model.get('_isVisible')) {
                 //added unlockelement
-                this.model.unlockelement();
+                //this.model.unlockelement();
                 this.model.set({
                     '_isComplete': true,
                     '_isInteractionComplete': true
